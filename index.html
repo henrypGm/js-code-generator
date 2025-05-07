@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Code Generator</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="light-mode">
+    <div class="container">
+        <!-- Dark/Light Mode Toggle -->
+        <div class="mode-toggle">
+            <i class="fas fa-sun" id="modeToggle"></i>
+        </div>
+
+        <header class="app-header">
+            <h1 class="text-center mb-4">
+                <i class="fas fa-code me-2"></i>JavaScript Code Generator
+            </h1>
+        </header>
+
+        <main>
+            <form id="generatorForm">
+                <!-- Basic Settings Section -->
+                <section class="settings-section">
+                    <h2 class="section-title">
+                        <i class="fas fa-cog me-2"></i>Basic Settings
+                    </h2>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="entitie">Entitie:</label>
+                                <div class="input-group">
+                                    <input type="text" id="entitie" name="entitie" class="form-control" required placeholder="e.g., WMN1">
+                                    <span class="input-group-text"><i class="fas fa-tag"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="midnightHour">Midnight Hour:</label>
+                                <div class="input-group">
+                                    <input type="number" id="midnightHour" name="midnightHour" class="form-control" required min="0" max="23" placeholder="0-23">
+                                    <span class="input-group-text"><i class="fas fa-clock"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Seed Configuration Section -->
+                <section class="settings-section">
+                    <h2 class="section-title">
+                        <i class="fas fa-seedling me-2"></i>Seed Configuration
+                    </h2>
+                    
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="nbrseeds">Number of Seeds:</label>
+                                <div class="input-group">
+                                    <input type="number" id="nbrseeds" name="nbrseeds" class="form-control" required min="1">
+                                    <span class="input-group-text"><i class="fas fa-hashtag"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="nbrdeploys">Number of Deploys:</label>
+                                <div class="input-group">
+                                    <input type="number" id="nbrdeploys" name="nbrdeploys" class="form-control" required min="1">
+                                    <span class="input-group-text"><i class="fas fa-server"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="totalDrops">Total Drops:</label>
+                                <div class="input-group">
+                                    <input type="number" id="totalDrops" name="totalDrops" class="form-control" required min="1">
+                                    <span class="input-group-text"><i class="fas fa-layer-group"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Negative Files Section -->
+                <section class="settings-section negative-section">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h2 class="section-title">
+                            <i class="fas fa-file-excel me-2"></i>Negative Files
+                        </h2>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="negativeToggle" checked>
+                            <label class="form-check-label" for="negativeToggle">Enable Negative Files</label>
+                        </div>
+                    </div>
+                    
+                    <div class="negative-content">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="totalNegative">Total Negative:</label>
+                                    <div class="input-group">
+                                        <input type="number" id="totalNegative" name="totalNegative" class="form-control" value="0" required>
+                                        <span class="input-group-text"><i class="fas fa-file-alt"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="cheminNegative">Negative Folder:</label>
+                                    <div class="input-group">
+                                        <input type="file" id="cheminNegative" name="cheminNegative" class="form-control" webkitdirectory mozdirectory msdirectory odirectory directory required>
+                                        <button type="button" class="btn btn-outline-secondary" id="cheminNegativeHelp">
+                                            <i class="fas fa-info-circle"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- File Paths Section -->
+                <section class="settings-section">
+                    <h2 class="section-title">
+                        <i class="fas fa-folder-open me-2"></i>File Paths
+                    </h2>
+                    
+                    <div class="form-group">
+                        <label for="timePath">Time Path File:</label>
+                        <div class="input-group">
+                            <input type="file" id="timePath" name="timePath" class="form-control" accept=".txt" required>
+                            <button type="button" class="btn btn-outline-secondary" id="timePathHelp">
+                                <i class="fas fa-info-circle"></i>
+                            </button>
+                        </div>
+                        <small class="form-text">Select the time configuration file (e.g., Time_WMN1.txt)</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cheminFiles">Seeds Folder:</label>
+                        <div class="input-group">
+                            <input type="file" id="cheminFiles" name="cheminFiles" class="form-control" webkitdirectory mozdirectory msdirectory odirectory directory required>
+                            <button type="button" class="btn btn-outline-secondary" id="cheminFilesHelp">
+                                <i class="fas fa-info-circle"></i>
+                            </button>
+                        </div>
+                        <small class="form-text">Select the folder containing seed files (wmn_*.txt)</small>
+                    </div>
+                </section>
+
+                <!-- Seed Distribution Section -->
+                <section class="settings-section">
+                    <h2 class="section-title">
+                        <i class="fas fa-random me-2"></i>Seed Distribution
+                    </h2>
+                    
+                    <div class="card distribution-card">
+                        <div class="card-body">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" id="splitSeeds" name="seedDistribution" value="split" checked>
+                                <label class="form-check-label" for="splitSeeds">
+                                    <i class="fas fa-equals me-1"></i> Split seeds evenly across deploys
+                                </label>
+                            </div>
+                            <div class="form-check mt-2">
+                                <input class="form-check-input" type="radio" id="personalize" name="seedDistribution" value="personalize">
+                                <label class="form-check-label" for="personalize">
+                                    <i class="fas fa-pen me-1"></i> Custom seed ranges for each deploy
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Deploy Inputs Section -->
+                <section id="deployInputsSection" class="settings-section deploy-section">
+                    <h2 class="section-title">
+                        <i class="fas fa-sliders-h me-2"></i>Deploy Configuration
+                    </h2>
+                    <div id="deployInputsContainer" class="deploy-inputs-grid">
+                        <!-- Dynamic inputs will be added here -->
+                    </div>
+                </section>
+
+                <!-- Generate Button -->
+                <div class="form-group mt-4">
+                    <button type="submit" class="btn btn-primary w-100 generate-btn">
+                        <i class="fas fa-magic me-2"></i>Generate Code
+                    </button>
+                </div>
+            </form>
+
+            <!-- Generated Code Section -->
+            <section class="generated-code-section">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h2 class="section-title mb-0">
+                        <i class="fas fa-file-code me-2"></i>Generated Code
+                    </h2>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="wrapToggle" checked>
+                        <label class="form-check-label" for="wrapToggle">Wrap Text</label>
+                    </div>
+                </div>
+                
+                <textarea id="generatedCode" readonly class="form-control mb-3" rows="15" wrap="soft"></textarea>
+                
+                <div class="d-flex gap-3">
+                    <button onclick="copyCode()" class="btn btn-secondary flex-grow-1">
+                        <i class="fas fa-copy me-2"></i>Copy Code
+                    </button>
+                    <button onclick="downloadCode()" class="btn btn-success flex-grow-1">
+                        <i class="fas fa-download me-2"></i>Download File
+                    </button>
+                </div>
+            </section>
+        </main>
+
+        <footer class="app-footer">
+            <p class="developer-name">
+                Developed by <strong>Sechdd</strong>
+                <span class="version-badge">v2.1</span>
+            </p>
+            <small class="copyright-text">
+                &copy; <span id="currentYear"></span> JavaScript Code Generator
+            </small>
+        </footer>
+    </div>
+
+    <!-- Help Modal -->
+    <div class="modal fade" id="helpModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="helpModalTitle">
+                        <i class="fas fa-question-circle me-2"></i>Help
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="helpModalBody">
+                    <!-- Help content will be inserted here -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+                        <i class="fas fa-times me-1"></i>Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="generator.js"></script>
+</body>
+</html>
