@@ -1,6 +1,7 @@
 // generator.js
 // Initialize Bootstrap tooltips
 document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('entitie').setAttribute('autocomplete', 'off');
     const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
     const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         return new bootstrap.Tooltip(tooltipTriggerEl);
@@ -86,27 +87,45 @@ negativeToggle.addEventListener('change', updateNegativeVisibility);
 function getFullPath(fileInput) {
     if (!fileInput || !fileInput.files || fileInput.files.length === 0) return '';
     
-    // Modern browsers don't allow full path access for security reasons
-    // So we'll construct a likely path based on the file name
+    const username = getUsername();
     const fileName = fileInput.files[0].name;
     const entitie = document.getElementById('entitie').value || 'WMN';
     
-    // Construct a typical path structure
-    return `C:\\\\Users\\\\[USERNAME]\\\\Documents\\\\iMacros\\\\Datasources\\\\${fileName.includes('Time') ? 'Time\\\\Web\\\\' : fileName.includes('wmn') ? 'Seeds\\\\Web\\\\' : 'N\\\\' + entitie + '\\\\'}${fileName}`;
+    return `C:\\\\Users\\\\${username}\\\\Documents\\\\iMacros\\\\Datasources\\\\${fileName.includes('Time') ? 'Time\\\\Web\\\\' : fileName.includes('wmn') ? 'Seeds\\\\Web\\\\' : 'N\\\\' + entitie + '\\\\'}${fileName}`;
 }
 
 // Function to get folder path
 function getFolderPath(folderInput) {
     if (!folderInput || !folderInput.files || folderInput.files.length === 0) return '';
     
-    // Modern browsers don't allow full path access for security reasons
-    // So we'll construct a likely path based on the first file in the folder
+    const username = getUsername();
     const entitie = document.getElementById('entitie').value || 'WMN';
     const folderName = folderInput.files[0].webkitRelativePath.split('/')[0];
     
-    // Construct a typical path structure
-    return `C:\\\\Users\\\\[USERNAME]\\\\Documents\\\\iMacros\\\\Datasources\\\\${folderInput.id === 'cheminFiles' ? 'Seeds\\\\Web\\\\' : 'N\\\\' + entitie + '\\\\'}${folderName}`;
+    return `C:\\\\Users\\\\${username}\\\\Documents\\\\iMacros\\\\Datasources\\\\${folderInput.id === 'cheminFiles' ? 'Seeds\\\\Web\\\\' : 'N\\\\' + entitie + '\\\\'}${folderName}`;
 }
+
+// Function to get current username (works in most browsers)
+function getUsername() {
+    try {
+        // Try to get from browser storage or system
+        if (localStorage.getItem('username')) {
+            return localStorage.getItem('username');
+        }
+        
+        // Try to extract from userAgent (fallback)
+        const userAgent = navigator.userAgent;
+        if (userAgent.includes('Windows')) {
+            const match = userAgent.match(/Windows NT [\d.]+; ([\w.]+)/);
+            if (match && match[1]) return match[1];
+        }
+        
+        return 'USERNAME'; // Fallback if nothing works
+    } catch (e) {
+        return 'USERNAME';
+    }
+}
+
 
 // Function to generate deploy inputs
 function generateDeployInputs() {
@@ -436,7 +455,7 @@ ${negativeCode}
     iimPlay(macrolist);
 
     //-GENERATE MODE 
-    // alert("Drop Nomber :"+ t + " Done \\n");
+    alert("Drop Nomber :"+ t + " Done \\n");
 
 
 }
